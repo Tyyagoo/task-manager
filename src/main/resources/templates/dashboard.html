@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Summary</th>
+        <th>Managing Unit</th>
+        <th>Priority</th>
+        <th>External Status</th>
+        <th>Planned Date</th>
+        <th>Status</th>
+        <th>Current Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {#for item in items.await}
+    <tr>
+        <td>{item.item.id}</td>
+        <td>{item.item.summary}</td>
+        <td>{item.item.managingUnit}</td>
+        <td>{item.item.priority}</td>
+        <td>{item.item.externalStatus}</td>
+        <td>{item.item.plannedDate}</td>
+        <td>
+            <span hx-get="/work-item/{item.item.id}/edit-field/status" hx-target="this" hx-swap="outerHTML">{item.status ?: ''}</span>
+        </td>
+        <td>
+            <span hx-get="/work-item/{item.item.id}/edit-field/current_action" hx-target="this" hx-swap="outerHTML">{item.currentAction ?: ''}</span>
+        </td>
+    </tr>
+    {/for}
+    </tbody>
+</table>
+</body>
+</html>
